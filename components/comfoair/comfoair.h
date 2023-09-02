@@ -13,10 +13,10 @@ namespace comfoair {
 class ComfoAirComponent : public climate::Climate, public PollingComponent, public uart::UARTDevice {
 public:
 
-  // Poll every 600ms
+  // Poll every 10s
   ComfoAirComponent() : 
   Climate(), 
-  PollingComponent(600),
+  PollingComponent(10000),
   UARTDevice() { }
 
   /// Return the traits of this controller.
@@ -27,15 +27,18 @@ public:
       climate::CLIMATE_MODE_FAN_ONLY
     });
     traits.set_supports_two_point_target_temperature(false);
-    traits.set_supported_presets({
-        climate::CLIMATE_PRESET_HOME,
-    }); 
+    /// Presets remain unused
+    //traits.set_supported_presets({
+    //    climate::CLIMATE_PRESET_HOME,
+    //}); 
     traits.set_supports_action(false);
     traits.set_visual_min_temperature(12);
     traits.set_visual_max_temperature(29);
-    //traits.set_visual_tXComfoAirComponentemperature_step(1);
+    /// Ensures valid target temperature steps
+    traits.set_visual_target_temperature_step(0.5f);
     traits.set_supported_fan_modes({
-      climate::CLIMATE_FAN_FOCUS,
+      /// Focus not present on my unit
+      //climate::CLIMATE_FAN_FOCUS,
       climate::CLIMATE_FAN_AUTO,
       climate::CLIMATE_FAN_LOW,
       climate::CLIMATE_FAN_MEDIUM,
@@ -52,10 +55,6 @@ public:
 
       this->fan_mode = *call.get_fan_mode();
       switch (this->fan_mode.value()) {
-        case climate::CLIMATE_FAN_FOCUS:
-          level = 0x05;
-          break;
-
         case climate::CLIMATE_FAN_HIGH:
           level = 0x04;
           break;
@@ -74,6 +73,7 @@ public:
         case climate::CLIMATE_FAN_ON:
         case climate::CLIMATE_FAN_MIDDLE:
         case climate::CLIMATE_FAN_DIFFUSE:
+	case climate::CLIMATE_FAN_FOCUS:
         default:
           level = -1;
           break;
@@ -439,12 +439,12 @@ protected:
         if (this->supply_air_temperature != nullptr && msg[5] & 0x02) {
           this->supply_air_temperature->publish_state((float) msg[2] / 2.0f - 20.0f);
         }
-        // T3 / exhaust air
+        // T3 / return air
         if (this->return_air_temperature != nullptr && msg[5] & 0x04) {
           this->return_air_temperature->publish_state((float) msg[3] / 2.0f - 20.0f);
           this->current_temperature = (float) msg[3] / 2.0f - 20.0f;
         }
-        // T4 / continued air
+        // T4 / exhaust air
         if (this->exhaust_air_temperature != nullptr && msg[5] & 0x08) {
           this->exhaust_air_temperature->publish_state((float) msg[4] / 2.0f - 20.0f);
         }
