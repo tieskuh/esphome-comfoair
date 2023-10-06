@@ -134,10 +134,13 @@ public:
       case 6:
         get_bypass_control_status_();
         break;
+      case 7:
+        get_operating_hours_status_();
+        break;
     }
 
     update_counter_++;
-    if (update_counter_ > 6)
+    if (update_counter_ > 7)
       update_counter_ = 0;
   }
 
