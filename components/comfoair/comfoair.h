@@ -359,7 +359,6 @@ protected:
         break;
       }
       case COMFOAIR_GET_OPERATING_HOURS_RESPONSE: {
-	ESP_LOGD(TAG, publish_state(msg[7]));
 	if (this->filter_hours != nullptr) {
           this->filter_hours->publish_state(msg[7]);
         }
