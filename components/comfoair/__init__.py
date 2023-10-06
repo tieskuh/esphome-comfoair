@@ -25,7 +25,6 @@ CONF_OUTSIDE_AIR_TEMPERATURE = "outside_air_temperature"
 CONF_SUPPLY_AIR_TEMPERATURE = "supply_air_temperature"
 CONF_RETURN_AIR_TEMPERATURE = "return_air_temperature"
 CONF_EXHAUST_AIR_TEMPERATURE = "exhaust_air_temperature"
-CONF_ENTHALPY_TEMPERATURE = "enthalpy_temperature"
 CONF_REHEATING_TEMPERATURE = "reheating_temperature"
 CONF_RETURN_AIR_LEVEL = "return_air_level"
 CONF_SUPPLY_AIR_LEVEL = "supply_air_level"
@@ -47,7 +46,6 @@ helper_comfoair_list = [
     CONF_SUPPLY_AIR_TEMPERATURE,
     CONF_RETURN_AIR_TEMPERATURE,
     CONF_EXHAUST_AIR_TEMPERATURE,
-    CONF_ENTHALPY_TEMPERATURE,
     CONF_REHEATING_TEMPERATURE,
     CONF_RETURN_AIR_LEVEL,
     CONF_SUPPLY_AIR_LEVEL,
@@ -92,11 +90,6 @@ cv.Optional(CONF_RETURN_AIR_TEMPERATURE): sensor.sensor_schema(
     accuracy_decimals=1,
     state_class=STATE_CLASS_MEASUREMENT).extend(),
 cv.Optional(CONF_EXHAUST_AIR_TEMPERATURE): sensor.sensor_schema(
-    device_class=DEVICE_CLASS_TEMPERATURE,
-    unit_of_measurement=UNIT_CELSIUS,
-    accuracy_decimals=1,
-    state_class=STATE_CLASS_MEASUREMENT).extend(),
-cv.Optional(CONF_ENTHALPY_TEMPERATURE): sensor.sensor_schema(
     device_class=DEVICE_CLASS_TEMPERATURE,
     unit_of_measurement=UNIT_CELSIUS,
     accuracy_decimals=1,
