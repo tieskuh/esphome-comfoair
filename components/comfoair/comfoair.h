@@ -463,6 +463,13 @@ protected:
     }
   }
 
+  void get_operating_hours_status_() {
+    if (this->filter_hours != nullptr) {
+      ESP_LOGD(TAG, "getting filter hours");
+      this->write_command_(COMFOAIR_GET_OPERATING_HOURS_REQUEST, nullptr, 0);
+    }
+  }
+
   void get_bypass_control_status_() {
     if (this->bypass_factor != nullptr ||
       this->bypass_step != nullptr ||
