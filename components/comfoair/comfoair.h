@@ -358,9 +358,10 @@ protected:
         }
         break;
       }
-      case COMFOAIR_GET_SENSOR_DATA_RESPONSE: {
-
-
+      case COMFOAIR_GET_OPERATING_HOURS_RESPONSE: {
+	if (this->filter_hours != nullptr) {
+          this->filter_hours->publish_state(msg);
+        }
         break;
       }
       case COMFOAIR_GET_VENTILATION_LEVEL_RESPONSE: {
@@ -532,6 +533,7 @@ public:
   sensor::Sensor *bypass_factor{nullptr};
   sensor::Sensor *bypass_step{nullptr};
   sensor::Sensor *bypass_correction{nullptr};
+  sensor::Sensor *filter_hours{nullptr};
   binary_sensor::BinarySensor *is_bypass_valve_open{nullptr};
   binary_sensor::BinarySensor *is_preheating{nullptr};
   binary_sensor::BinarySensor *is_summer_mode{nullptr};
@@ -557,6 +559,7 @@ public:
   void set_bypass_factor(sensor::Sensor *bypass_factor) {this->bypass_factor = bypass_factor; };
   void set_bypass_step(sensor::Sensor *bypass_step) {this->bypass_step = bypass_step; };
   void set_bypass_correction(sensor::Sensor *bypass_correction) {this->bypass_correction = bypass_correction; };
+  void set_filter_hours(sensor::Sensor *filter_hours) {this->filter_hours = filter_hours; };
   void set_is_summer_mode(binary_sensor::BinarySensor *is_summer_mode) {this->is_summer_mode = is_summer_mode; };
 };
 
