@@ -37,9 +37,6 @@ public:
     /// Ensures valid target temperature steps
     traits.set_visual_target_temperature_step(0.5f);
     traits.set_supported_fan_modes({
-      /// Focus not present on my unit
-      //climate::CLIMATE_FAN_FOCUS,
-      //climate::CLIMATE_FAN_AUTO,
       climate::CLIMATE_FAN_LOW,
       climate::CLIMATE_FAN_MEDIUM,
       climate::CLIMATE_FAN_HIGH,
@@ -67,13 +64,6 @@ public:
         case climate::CLIMATE_FAN_OFF:
           level = 0x01;
           break;
-        case climate::CLIMATE_FAN_AUTO:
-          level = 0x00;
-          break;
-        case climate::CLIMATE_FAN_ON:
-        case climate::CLIMATE_FAN_MIDDLE:
-        case climate::CLIMATE_FAN_DIFFUSE:
-	case climate::CLIMATE_FAN_FOCUS:
         default:
           level = -1;
           break;
