@@ -100,7 +100,7 @@ cv.Optional(CONF_BYPASS_STEP): sensor.sensor_schema(
     icon="mdi:valve",
     state_class=STATE_CLASS_MEASUREMENT).extend(),
 cv.Optional(CONF_IS_BYPASS_VALVE_OPEN): binary_sensor.binary_sensor_schema(device_class=DEVICE_CLASS_OPENING).extend(),
-cv.Optional(CONF_IS_PREHEATING): binary_sensor.binary_sensor_schema(device_class=DEVICE_CLASS_HEAT, icon="mdi:heat-wave").extend(),
+cv.Optional(CONF_IS_PREHEATING): binary_sensor.binary_sensor_schema(device_class=DEVICE_CLASS_EMPTY, icon="mdi:heat-wave").extend(),
 cv.Optional(CONF_IS_SUMMER_MODE): binary_sensor.binary_sensor_schema(device_class=DEVICE_CLASS_EMPTY, icon="mdi:weather-sunny").extend(),
 cv.Optional(CONF_IS_SUPPLY_FAN_ACTIVE): binary_sensor.binary_sensor_schema(device_class=DEVICE_CLASS_EMPTY,icon="mdi:fan").extend(),
 cv.Optional(CONF_IS_FILTER_FULL): binary_sensor.binary_sensor_schema(device_class=DEVICE_CLASS_PROBLEM,icon="mdi:air-filter").extend(),
