@@ -39,7 +39,7 @@ public:
     traits.set_supported_fan_modes({
       /// Focus not present on my unit
       //climate::CLIMATE_FAN_FOCUS,
-      climate::CLIMATE_FAN_AUTO,
+      //climate::CLIMATE_FAN_AUTO,
       climate::CLIMATE_FAN_LOW,
       climate::CLIMATE_FAN_MEDIUM,
       climate::CLIMATE_FAN_HIGH,
