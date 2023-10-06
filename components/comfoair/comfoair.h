@@ -360,9 +360,6 @@ protected:
       }
       case COMFOAIR_GET_SENSOR_DATA_RESPONSE: {
 
-        if (this->enthalpy_temperature != nullptr) {
-          this->enthalpy_temperature->publish_state((float) msg[0] / 2.0f - 20.0f);
-        }
 
         break;
       }
