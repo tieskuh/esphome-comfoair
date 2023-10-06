@@ -434,10 +434,7 @@ protected:
         if (this->exhaust_air_temperature != nullptr && msg[5] & 0x08) {
           this->exhaust_air_temperature->publish_state((float) msg[4] / 2.0f - 20.0f);
         }
-        // EWT
-        if (this->ewt_temperature != nullptr && msg[5] & 0x10) {
-          this->ewt_temperature->publish_state((float) msg[6] / 2.0f - 20.0f);
-        }
+
         // reheating
         if (this->reheating_temperature != nullptr && msg[5] & 0x20) {
           this->reheating_temperature->publish_state((float) msg[7] / 2.0f - 20.0f);
