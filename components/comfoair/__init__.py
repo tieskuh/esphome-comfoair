@@ -28,9 +28,7 @@ CONF_EXHAUST_AIR_TEMPERATURE = "exhaust_air_temperature"
 CONF_REHEATING_TEMPERATURE = "reheating_temperature"
 CONF_IS_SUPPLY_FAN_ACTIVE = "is_supply_fan_active"
 CONF_IS_FILTER_FULL = "is_filter_full"
-CONF_BYPASS_FACTOR = "bypass_factor"
 CONF_BYPASS_STEP = "bypass_step"
-CONF_BYPASS_CORRECTION = "bypass_correction"
 CONF_IS_SUMMER_MODE = "is_summer_mode"
 
 helper_comfoair_list = [
@@ -45,11 +43,8 @@ helper_comfoair_list = [
     CONF_RETURN_AIR_TEMPERATURE,
     CONF_EXHAUST_AIR_TEMPERATURE,
     CONF_REHEATING_TEMPERATURE,
-    CONF_IS_SUPPLY_FAN_ACTIVE,
     CONF_IS_FILTER_FULL,
-    CONF_BYPASS_FACTOR,
     CONF_BYPASS_STEP,
-    CONF_BYPASS_CORRECTION,
     CONF_IS_SUMMER_MODE,
 ]
 
@@ -57,18 +52,22 @@ comfoair_sensors_schemas = cv.Schema({
 cv.Optional(CONF_FAN_SUPPLY_AIR_PERCENTAGE): sensor.sensor_schema(
     unit_of_measurement=UNIT_PERCENT,
     accuracy_decimals=0,
+    icon="mdi:fan",
     state_class=STATE_CLASS_MEASUREMENT).extend(),
 cv.Optional(CONF_FAN_EXHAUST_AIR_PERCENTAGE): sensor.sensor_schema(
     unit_of_measurement=UNIT_PERCENT,
     accuracy_decimals=0,
+    icon="mdi:fan",
     state_class=STATE_CLASS_MEASUREMENT).extend(),
 cv.Optional(CONF_FAN_SPEED_SUPPLY): sensor.sensor_schema(
     unit_of_measurement="rpm",
     accuracy_decimals=0,
+    icon="mdi:fan",
     state_class=STATE_CLASS_MEASUREMENT).extend(),
 cv.Optional(CONF_FAN_SPEED_EXHAUST): sensor.sensor_schema(
     unit_of_measurement="rpm",
     accuracy_decimals=0,
+    icon="mdi:fan",
     state_class=STATE_CLASS_MEASUREMENT).extend(),
 cv.Optional(CONF_OUTSIDE_AIR_TEMPERATURE): sensor.sensor_schema(
     device_class=DEVICE_CLASS_TEMPERATURE,
@@ -95,17 +94,7 @@ cv.Optional(CONF_REHEATING_TEMPERATURE): sensor.sensor_schema(
     unit_of_measurement=UNIT_CELSIUS,
     accuracy_decimals=1,
     state_class=STATE_CLASS_MEASUREMENT).extend(),
-cv.Optional(CONF_BYPASS_FACTOR): sensor.sensor_schema(
-    unit_of_measurement=UNIT_PERCENT,
-    accuracy_decimals=0,
-    icon="mdi:valve",
-    state_class=STATE_CLASS_MEASUREMENT).extend(),
 cv.Optional(CONF_BYPASS_STEP): sensor.sensor_schema(
-    unit_of_measurement=UNIT_PERCENT,
-    accuracy_decimals=0,
-    icon="mdi:valve",
-    state_class=STATE_CLASS_MEASUREMENT).extend(),
-cv.Optional(CONF_BYPASS_CORRECTION): sensor.sensor_schema(
     unit_of_measurement=UNIT_PERCENT,
     accuracy_decimals=0,
     icon="mdi:valve",
@@ -113,8 +102,8 @@ cv.Optional(CONF_BYPASS_CORRECTION): sensor.sensor_schema(
 cv.Optional(CONF_IS_BYPASS_VALVE_OPEN): binary_sensor.binary_sensor_schema(device_class=DEVICE_CLASS_OPENING).extend(),
 cv.Optional(CONF_IS_PREHEATING): binary_sensor.binary_sensor_schema(device_class=DEVICE_CLASS_EMPTY).extend(),
 cv.Optional(CONF_IS_SUMMER_MODE): binary_sensor.binary_sensor_schema(device_class=DEVICE_CLASS_EMPTY).extend(),
-cv.Optional(CONF_IS_SUPPLY_FAN_ACTIVE): binary_sensor.binary_sensor_schema(device_class=DEVICE_CLASS_EMPTY).extend(),
-cv.Optional(CONF_IS_FILTER_FULL): binary_sensor.binary_sensor_schema(device_class=DEVICE_CLASS_EMPTY).extend(),
+cv.Optional(CONF_IS_SUPPLY_FAN_ACTIVE): binary_sensor.binary_sensor_schema(device_class=DEVICE_CLASS_EMPTY,icon="mdi:fan").extend(),
+cv.Optional(CONF_IS_FILTER_FULL): binary_sensor.binary_sensor_schema(device_class=DEVICE_CLASS_EMPTY,icon="mdi:air-filter").extend(),
 })
 
 CONFIG_SCHEMA = cv.All(
