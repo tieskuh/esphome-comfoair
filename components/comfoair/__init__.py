@@ -101,9 +101,7 @@ cv.Optional(CONF_BYPASS_STEP): sensor.sensor_schema(
     accuracy_decimals=0,
     icon="mdi:valve",
     state_class=STATE_CLASS_MEASUREMENT).extend(),
-cv.Optional(CONF_BYPASS_STEP): sensor.sensor_schema(
-    unit_of_measurement="h",
-    accuracy_decimals=0,
+cv.Optional(CONF_FILTER_HOURS): sensor.sensor_schema(
     icon="mdi:timer",
     state_class=STATE_CLASS_MEASUREMENT).extend(),
 cv.Optional(CONF_IS_BYPASS_VALVE_OPEN): binary_sensor.binary_sensor_schema(device_class=DEVICE_CLASS_OPENING).extend(),
