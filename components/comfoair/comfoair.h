@@ -379,10 +379,6 @@ protected:
 
         // Fan Speed
         switch(msg[8]) {
-          case 0x00:
-            this->fan_mode = climate::CLIMATE_FAN_AUTO;
-            this->mode = climate::CLIMATE_MODE_AUTO;
-            break;
           case 0x01:
             this->fan_mode = climate::CLIMATE_FAN_OFF;
             this->mode = climate::CLIMATE_MODE_OFF;
@@ -445,10 +441,6 @@ protected:
         // reheating
         if (this->reheating_temperature != nullptr && msg[5] & 0x20) {
           this->reheating_temperature->publish_state((float) msg[7] / 2.0f - 20.0f);
-        }
-        // kitchen hood
-        if (this->kitchen_hood_temperature != nullptr && msg[5] & 0x40) {
-          this->kitchen_hood_temperature->publish_state((float) msg[8] / 2.0f - 20.0f);
         }
 
         break;
@@ -547,7 +539,6 @@ public:
   sensor::Sensor *enthalpy_temperature{nullptr};
   sensor::Sensor *ewt_temperature{nullptr};
   sensor::Sensor *reheating_temperature{nullptr};
-  sensor::Sensor *kitchen_hood_temperature{nullptr};
   sensor::Sensor *return_air_level{nullptr};
   sensor::Sensor *supply_air_level{nullptr};
   sensor::Sensor *bypass_factor{nullptr};
