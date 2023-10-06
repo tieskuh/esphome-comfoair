@@ -134,13 +134,10 @@ public:
       case 6:
         get_bypass_control_status_();
         break;
-      case 7:
-        get_operating_hours_status_();
-        break;
     }
 
     update_counter_++;
-    if (update_counter_ > 7)
+    if (update_counter_ > 6)
       update_counter_ = 0;
   }
 
@@ -361,12 +358,7 @@ protected:
         }
         break;
       }
-      case COMFOAIR_GET_OPERATING_HOURS_RESPONSE: {
-	if (this->filter_hours != nullptr) {
-          this->filter_hours->publish_state(msg[7]);
-        }
-        break;
-      }
+      
       case COMFOAIR_GET_VENTILATION_LEVEL_RESPONSE: {
 
         ESP_LOGD(TAG, "Level %02x", msg[8]);
@@ -466,13 +458,6 @@ protected:
     }
   }
 
-  void get_operating_hours_status_() {
-    if (this->filter_hours != nullptr) {
-      ESP_LOGD(TAG, "getting filter hours");
-      this->write_command_(COMFOAIR_GET_OPERATING_HOURS_REQUEST, nullptr, 0);
-    }
-  }
-
   void get_bypass_control_status_() {
     if (this->bypass_factor != nullptr ||
       this->bypass_step != nullptr ||
@@ -543,7 +528,6 @@ public:
   sensor::Sensor *bypass_factor{nullptr};
   sensor::Sensor *bypass_step{nullptr};
   sensor::Sensor *bypass_correction{nullptr};
-  sensor::Sensor *filter_hours{nullptr};
   binary_sensor::BinarySensor *is_bypass_valve_open{nullptr};
   binary_sensor::BinarySensor *is_preheating{nullptr};
   binary_sensor::BinarySensor *is_summer_mode{nullptr};
@@ -569,7 +553,6 @@ public:
   void set_bypass_factor(sensor::Sensor *bypass_factor) {this->bypass_factor = bypass_factor; };
   void set_bypass_step(sensor::Sensor *bypass_step) {this->bypass_step = bypass_step; };
   void set_bypass_correction(sensor::Sensor *bypass_correction) {this->bypass_correction = bypass_correction; };
-  void set_filter_hours(sensor::Sensor *filter_hours) {this->filter_hours = filter_hours; };
   void set_is_summer_mode(binary_sensor::BinarySensor *is_summer_mode) {this->is_summer_mode = is_summer_mode; };
 };
 
