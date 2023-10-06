@@ -13,10 +13,10 @@ namespace comfoair {
 class ComfoAirComponent : public climate::Climate, public PollingComponent, public uart::UARTDevice {
 public:
 
-  // Poll every 10s
+  // Poll every 5s
   ComfoAirComponent() : 
   Climate(), 
-  PollingComponent(10000),
+  PollingComponent(5000),
   UARTDevice() { }
 
   /// Return the traits of this controller.
@@ -367,12 +367,7 @@ protected:
 
         ESP_LOGD(TAG, "Level %02x", msg[8]);
 
-        if (this->return_air_level != nullptr) {
-          this->return_air_level->publish_state(msg[6]);
-        }
-        if (this->supply_air_level != nullptr) {
-          this->supply_air_level->publish_state(msg[7]);
-        }
+        
 
         // Fan Speed
         switch(msg[8]) {
