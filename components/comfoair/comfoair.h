@@ -13,10 +13,10 @@ namespace comfoair {
 class ComfoAirComponent : public climate::Climate, public PollingComponent, public uart::UARTDevice {
 public:
 
-  // Poll every 5s
+  // Poll every 10s
   ComfoAirComponent() : 
   Climate(), 
-  PollingComponent(5000),
+  PollingComponent(10000),
   UARTDevice() { }
 
   /// Return the traits of this controller.
