@@ -537,7 +537,6 @@ public:
   sensor::Sensor *return_air_temperature{nullptr};
   sensor::Sensor *exhaust_air_temperature{nullptr};
   sensor::Sensor *enthalpy_temperature{nullptr};
-  sensor::Sensor *ewt_temperature{nullptr};
   sensor::Sensor *reheating_temperature{nullptr};
   sensor::Sensor *return_air_level{nullptr};
   sensor::Sensor *supply_air_level{nullptr};
@@ -561,9 +560,7 @@ public:
   void set_return_air_temperature(sensor::Sensor *return_air_temperature) {this->return_air_temperature =return_air_temperature; };
   void set_exhaust_air_temperature(sensor::Sensor *exhaust_air_temperature) {this->exhaust_air_temperature =exhaust_air_temperature; };
   void set_enthalpy_temperature(sensor::Sensor *enthalpy_temperature) {this->enthalpy_temperature =enthalpy_temperature; };
-  void set_ewt_temperature(sensor::Sensor *ewt_temperature) {this->ewt_temperature =ewt_temperature; };
   void set_reheating_temperature(sensor::Sensor *reheating_temperature) {this->reheating_temperature =reheating_temperature; };
-  void set_kitchen_hood_temperature(sensor::Sensor *kitchen_hood_temperature) {this->kitchen_hood_temperature =kitchen_hood_temperature; };
   void set_return_air_level(sensor::Sensor *return_air_level) {this->return_air_level =return_air_level; };
   void set_supply_air_level(sensor::Sensor *supply_air_level) {this->supply_air_level =supply_air_level; };
   void set_is_supply_fan_active(binary_sensor::BinarySensor *is_supply_fan_active) {this->is_supply_fan_active =is_supply_fan_active; };
