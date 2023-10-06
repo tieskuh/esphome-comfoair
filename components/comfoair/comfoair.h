@@ -360,7 +360,7 @@ protected:
       }
       case COMFOAIR_GET_OPERATING_HOURS_RESPONSE: {
 	if (this->filter_hours != nullptr) {
-          this->filter_hours->publish_state(msg);
+          this->filter_hours->publish_state(msg[0]);
         }
         break;
       }
