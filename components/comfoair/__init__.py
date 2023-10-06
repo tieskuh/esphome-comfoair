@@ -61,24 +61,20 @@ helper_comfoair_list = [
 
 comfoair_sensors_schemas = cv.Schema({
 cv.Optional(CONF_FAN_SUPPLY_AIR_PERCENTAGE): sensor.sensor_schema(
-    device_class=DEVICE_CLASS_SPEED,
     unit_of_measurement=UNIT_PERCENT,
     accuracy_decimals=0,
     state_class=STATE_CLASS_MEASUREMENT).extend(),
 cv.Optional(CONF_FAN_EXHAUST_AIR_PERCENTAGE): sensor.sensor_schema(
-    device_class=DEVICE_CLASS_SPEED,
     unit_of_measurement=UNIT_PERCENT,
     accuracy_decimals=0,
     state_class=STATE_CLASS_MEASUREMENT).extend(),
 cv.Optional(CONF_FAN_SPEED_SUPPLY): sensor.sensor_schema(
-    device_class=DEVICE_CLASS_SPEED,
-    unit_of_measurement=UNIT_PERCENT,
-    accuracy_decimals=1,
+    unit_of_measurement="rpm",
+    accuracy_decimals=0,
     state_class=STATE_CLASS_MEASUREMENT).extend(),
 cv.Optional(CONF_FAN_SPEED_EXHAUST): sensor.sensor_schema(
-    device_class=DEVICE_CLASS_SPEED,
-    unit_of_measurement=UNIT_PERCENT,
-    accuracy_decimals=1,
+    unit_of_measurement="rpm",
+    accuracy_decimals=0,
     state_class=STATE_CLASS_MEASUREMENT).extend(),
 cv.Optional(CONF_OUTSIDE_AIR_TEMPERATURE): sensor.sensor_schema(
     device_class=DEVICE_CLASS_TEMPERATURE,
@@ -128,12 +124,12 @@ cv.Optional(CONF_BYPASS_FACTOR): sensor.sensor_schema(
 cv.Optional(CONF_BYPASS_STEP): sensor.sensor_schema(
     device_class=DEVICE_CLASS_VOLUME,
     unit_of_measurement=UNIT_PERCENT,
-    accuracy_decimals=1,
+    accuracy_decimals=0,
     state_class=STATE_CLASS_MEASUREMENT).extend(),
 cv.Optional(CONF_BYPASS_CORRECTION): sensor.sensor_schema(
     device_class=DEVICE_CLASS_VOLUME,
     unit_of_measurement=UNIT_PERCENT,
-    accuracy_decimals=1,
+    accuracy_decimals=0,
     state_class=STATE_CLASS_MEASUREMENT).extend(),
 cv.Optional(CONF_IS_BYPASS_VALVE_OPEN): binary_sensor.binary_sensor_schema(device_class=DEVICE_CLASS_OPENING).extend(),
 cv.Optional(CONF_IS_PREHEATING): binary_sensor.binary_sensor_schema(device_class=DEVICE_CLASS_EMPTY).extend(),
