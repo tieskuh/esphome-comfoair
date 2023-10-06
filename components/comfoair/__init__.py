@@ -30,6 +30,7 @@ CONF_IS_SUPPLY_FAN_ACTIVE = "is_supply_fan_active"
 CONF_IS_FILTER_FULL = "is_filter_full"
 CONF_BYPASS_STEP = "bypass_step"
 CONF_IS_SUMMER_MODE = "is_summer_mode"
+CONF_FILTER_HOURS = "filter_hours"
 
 helper_comfoair_list = [
     CONF_FAN_SUPPLY_AIR_PERCENTAGE,
@@ -46,6 +47,7 @@ helper_comfoair_list = [
     CONF_IS_FILTER_FULL,
     CONF_BYPASS_STEP,
     CONF_IS_SUMMER_MODE,
+    CONF_FILTER_HOURS,
 ]
 
 comfoair_sensors_schemas = cv.Schema({
@@ -98,6 +100,11 @@ cv.Optional(CONF_BYPASS_STEP): sensor.sensor_schema(
     unit_of_measurement=UNIT_PERCENT,
     accuracy_decimals=0,
     icon="mdi:valve",
+    state_class=STATE_CLASS_MEASUREMENT).extend(),
+cv.Optional(CONF_BYPASS_STEP): sensor.sensor_schema(
+    unit_of_measurement="h",
+    accuracy_decimals=0,
+    icon="mdi:timer",
     state_class=STATE_CLASS_MEASUREMENT).extend(),
 cv.Optional(CONF_IS_BYPASS_VALVE_OPEN): binary_sensor.binary_sensor_schema(device_class=DEVICE_CLASS_OPENING).extend(),
 cv.Optional(CONF_IS_PREHEATING): binary_sensor.binary_sensor_schema(device_class=DEVICE_CLASS_EMPTY, icon="mdi:heat-wave").extend(),
