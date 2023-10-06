@@ -96,19 +96,19 @@ cv.Optional(CONF_REHEATING_TEMPERATURE): sensor.sensor_schema(
     accuracy_decimals=1,
     state_class=STATE_CLASS_MEASUREMENT).extend(),
 cv.Optional(CONF_BYPASS_FACTOR): sensor.sensor_schema(
-    device_class=DEVICE_CLASS_VOLUME,
     unit_of_measurement=UNIT_PERCENT,
-    accuracy_decimals=1,
+    accuracy_decimals=0,
+    icon="mdi:valve",
     state_class=STATE_CLASS_MEASUREMENT).extend(),
 cv.Optional(CONF_BYPASS_STEP): sensor.sensor_schema(
-    device_class=DEVICE_CLASS_VOLUME,
     unit_of_measurement=UNIT_PERCENT,
     accuracy_decimals=0,
+    icon="mdi:valve",
     state_class=STATE_CLASS_MEASUREMENT).extend(),
 cv.Optional(CONF_BYPASS_CORRECTION): sensor.sensor_schema(
-    device_class=DEVICE_CLASS_VOLUME,
     unit_of_measurement=UNIT_PERCENT,
     accuracy_decimals=0,
+    icon="mdi:valve",
     state_class=STATE_CLASS_MEASUREMENT).extend(),
 cv.Optional(CONF_IS_BYPASS_VALVE_OPEN): binary_sensor.binary_sensor_schema(device_class=DEVICE_CLASS_OPENING).extend(),
 cv.Optional(CONF_IS_PREHEATING): binary_sensor.binary_sensor_schema(device_class=DEVICE_CLASS_EMPTY).extend(),
