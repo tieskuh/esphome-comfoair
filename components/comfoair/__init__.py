@@ -47,7 +47,7 @@ helper_comfoair_list = [
     CONF_IS_FILTER_FULL,
     CONF_BYPASS_STEP,
     CONF_IS_SUMMER_MODE,
-    CONF_RESET_FILTER_TIMER
+    CONF_RESET_FILTER_TIMER,
 ]
 
 comfoair_sensors_schemas = cv.Schema({
