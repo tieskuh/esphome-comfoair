@@ -1,42 +1,19 @@
 # ComfoAir
-esphome:
-  name: zehnder-whr-950
-  friendly_name: Zehnder WHR 950
+Port of ComfoAir protocol to ESPHome.io firmware originally by @wichers modified by @nyxnyx
+to be installed as external_components.
 
-esp32:
-  board: esp32dev
-  framework:
-    type: arduino
-
-# Enable logging
-logger:
-
-# Enable Home Assistant API
-api:
-  encryption:
-    key: ""
-
-ota:
-  password: ""
-
-wifi:
-  ssid: !secret wifi_ssid
-  password: !secret wifi_password
-
-  # Enable fallback hotspot (captive portal) in case wifi connection fails
-  ap:
-    ssid: "Zehnder-Whr-950 Fallback Hotspot"
-    password: ""
-
-captive_portal:
-
+Add to your yaml configuration the definition of `external_components`:
+```
 external_components:
   - source:
       type: git
       url: https://github.com/tieskuh/esphome-comfoair
     components: [comfoair]
     refresh: 0s
+```
 
+and than use it:
+```
 uart:
   id: uart_bus
   rx_pin: 22
@@ -83,3 +60,4 @@ button:
         - lambda: |-
                 auto reset_filter = new esphome::comfoair::ComfoAirComponent();
                 reset_filter->reset_filter();
+```
