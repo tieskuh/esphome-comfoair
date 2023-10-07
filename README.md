@@ -1,8 +1,8 @@
-# ComfoAir
+# Zendher WHR 950
 Port of ComfoAir protocol to ESPHome.io firmware originally by @wichers modified by @nyxnyx
-to be installed as external_components.
-Modified for the Zehnder WHR 950 by @tieskuh.
+to be installed as external_components. Modified for the Zehnder WHR 950 by @tieskuh.
 
+# Configuration
 Add to your yaml configuration the definition of `external_components`:
 ```
 external_components:
@@ -63,7 +63,29 @@ button:
                 reset_filter->reset_filter();
 ```
 
+# Sensors
 The following sensors are created:
 
-
 ![image](https://github.com/tieskuh/esphome-comfoair/assets/115901851/7d733ddb-2106-4b77-b6f5-8dccbe4459c1)
+
+
+# Hardware
+I used the following hardware:
+- M5Stack: https://nl.aliexpress.com/item/1005003299215808.html
+- M5Stack RS-232 add-on: https://nl.aliexpress.com/item/1005005933403536.html
+
+![image](https://github.com/tieskuh/esphome-comfoair/assets/115901851/30fac702-c32d-469d-85dd-78bd432e304a)
+
+![image](https://github.com/tieskuh/esphome-comfoair/assets/115901851/fb6004f1-fa2d-49d7-8792-edb49e918043)
+
+![image](https://github.com/tieskuh/esphome-comfoair/assets/115901851/41531d2f-ca43-4b86-b24f-a7311b0b5898)
+
+Pin layout:
+- RX (receive) = pin 2
+- TX (transmit) = pin 3
+- GND (ground) = pin 5
+
+![image](https://github.com/tieskuh/esphome-comfoair/assets/115901851/6c8e96ea-fa3e-4b4c-8c62-9d6a73201175)
+
+
+
