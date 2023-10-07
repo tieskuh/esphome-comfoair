@@ -47,26 +47,30 @@ public:
     if (call.get_fan_mode().has_value()) {
       int level;
 
-      this->fan_mode = *call.get_fan_mode();
-      switch (this->fan_mode.value()) {
-        case climate::CLIMATE_FAN_HIGH:
-          level = 0x04;
-          break;
-        case climate::CLIMATE_FAN_MEDIUM:
-          level = 0x03;
-          break;
-        case climate::CLIMATE_FAN_LOW:
-          level = 0x02;
-          break;
-        case climate::CLIMATE_FAN_OFF:
-          level = 0x01;
-          break;
-	case climate::CLIMATE_MODE_OFF:
-	  level = 0x01;
-          break;
-        default:
-          level = -1;
-          break;
+      if (*call.get_fan_mode() == climate::CLIMATE_MODE_OFF)
+	level = 0x01;    
+      else {	    
+	      this->fan_mode = *call.get_fan_mode();
+	      switch (this->fan_mode.value()) {
+	        case climate::CLIMATE_FAN_HIGH:
+	          level = 0x04;
+	          break;
+	        case climate::CLIMATE_FAN_MEDIUM:
+	          level = 0x03;
+	          break;
+	        case climate::CLIMATE_FAN_LOW:
+	          level = 0x02;
+	          break;
+	        case climate::CLIMATE_FAN_OFF:
+	          level = 0x01;
+	          break;
+		case climate::CLIMATE_MODE_OFF:
+		  level = 0x01;
+	          break;
+	        default:
+	          level = -1;
+	          break;
+	      }
       }
 
       if (level >= 0) {
