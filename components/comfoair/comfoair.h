@@ -25,12 +25,9 @@ public:
     traits.set_supports_current_temperature(true);
     traits.set_supported_modes({
       climate::CLIMATE_MODE_FAN_ONLY
+      climate::CLIMATE_MODE_OFF
     });
     traits.set_supports_two_point_target_temperature(false);
-    /// Presets remain unused
-    //traits.set_supported_presets({
-    //    climate::CLIMATE_PRESET_HOME,
-    //}); 
     traits.set_supports_action(false);
     traits.set_visual_min_temperature(12);
     traits.set_visual_max_temperature(29);
@@ -63,6 +60,9 @@ public:
           break;
         case climate::CLIMATE_FAN_OFF:
           level = 0x01;
+          break;
+	case climate::CLIMATE_MODE_OFF
+	  level = 0x01;
           break;
         default:
           level = -1;
