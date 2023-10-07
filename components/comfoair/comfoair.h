@@ -47,7 +47,7 @@ public:
     if (call.get_fan_mode().has_value()) {
       int level;
 
-      if (*call.get_fan_mode() == climate::CLIMATE_MODE_OFF)
+      if (*call.get_mode() == climate::CLIMATE_MODE_OFF)
 	level = 0x01;    
       else {	    
 	      this->fan_mode = *call.get_fan_mode();
