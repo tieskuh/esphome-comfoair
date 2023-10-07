@@ -63,4 +63,6 @@ button:
 ```
 
 The following sensors are created:
+
+
 ![image](https://github.com/tieskuh/esphome-comfoair/assets/115901851/7d733ddb-2106-4b77-b6f5-8dccbe4459c1)
