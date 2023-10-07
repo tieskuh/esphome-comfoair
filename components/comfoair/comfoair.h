@@ -24,8 +24,7 @@ public:
     auto traits = climate::ClimateTraits();
     traits.set_supports_current_temperature(true);
     traits.set_supported_modes({
-      climate::CLIMATE_MODE_FAN_ONLY,
-      climate::CLIMATE_MODE_OFF
+      climate::CLIMATE_MODE_FAN_ONLY
     });
     traits.set_supports_two_point_target_temperature(false);
     traits.set_supports_action(false);
@@ -47,27 +46,24 @@ public:
     if (call.get_fan_mode().has_value()) {
       int level;
 
-      if (*call.get_mode() == climate::CLIMATE_MODE_OFF)
-	level = 0x01;    
-      else {	    
-	      this->fan_mode = *call.get_fan_mode();
-	      switch (this->fan_mode.value()) {
-	        case climate::CLIMATE_FAN_HIGH:
-	          level = 0x04;
-	          break;
-	        case climate::CLIMATE_FAN_MEDIUM:
-	          level = 0x03;
-	          break;
-	        case climate::CLIMATE_FAN_LOW:
-	          level = 0x02;
-	          break;
-	        case climate::CLIMATE_FAN_OFF:
-	          level = 0x01;
-	          break;
-	        default:
-	          level = -1;
-	          break;
-	      }
+      this->fan_mode = *call.get_fan_mode();
+      switch (this->fan_mode.value()) {
+	case climate::CLIMATE_FAN_HIGH:
+	  level = 0x04;
+	  break;
+	case climate::CLIMATE_FAN_MEDIUM:
+	  level = 0x03;
+	  break;
+	case climate::CLIMATE_FAN_LOW:
+	  level = 0x02;
+	  break;
+	case climate::CLIMATE_FAN_OFF:
+	  level = 0x01;
+	  break;
+	default:
+	  level = -1;
+	  break;
+
       }
 
       if (level >= 0) {
