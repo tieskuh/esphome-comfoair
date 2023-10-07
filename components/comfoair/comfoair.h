@@ -24,7 +24,7 @@ public:
     auto traits = climate::ClimateTraits();
     traits.set_supports_current_temperature(true);
     traits.set_supported_modes({
-      climate::CLIMATE_MODE_FAN_ONLY
+      climate::CLIMATE_MODE_FAN_ONLY,
       climate::CLIMATE_MODE_OFF
     });
     traits.set_supports_two_point_target_temperature(false);
