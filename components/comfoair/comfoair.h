@@ -177,7 +177,7 @@ public:
 protected:
 
   void set_level_(int level) {
-    if (level < 0 || level > 5) {
+    if (level < 0 || level > 4) {
       ESP_LOGI(TAG, "Ignoring invalid level request: %i", level);
       return;
     }
