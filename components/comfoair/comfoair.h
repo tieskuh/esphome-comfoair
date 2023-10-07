@@ -64,9 +64,6 @@ public:
 	        case climate::CLIMATE_FAN_OFF:
 	          level = 0x01;
 	          break;
-		case climate::CLIMATE_MODE_OFF:
-		  level = 0x01;
-	          break;
 	        default:
 	          level = -1;
 	          break;
