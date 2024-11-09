@@ -1,38 +1,42 @@
-# ComfoAir
+# Zendher WHR 950
 Port of ComfoAir protocol to ESPHome.io firmware originally by @wichers modified by @nyxnyx
-to be installed as external_components.
+to be installed as external_components. Modified for the Zehnder WHR 950 by @tieskuh.
+Also confirmed working for the Zehnder WHR 930.
 
+# Configuration
 Add to your yaml configuration the definition of `external_components`:
 ```
 external_components:
   - source:
       type: git
-      url: https://github.com/nyxnyx/esphome-comfoair
+      url: https://github.com/tieskuh/esphome-comfoair
     components: [comfoair]
+    refresh: 0s
 ```
+
 and than use it:
 ```
 uart:
   id: uart_bus
-  rx_pin: 3
-  tx_pin: 1
+  rx_pin: 22
+  tx_pin: 19
   baud_rate: 9600
 
 comfoair:
-  name: "ComfoAir 350"
+  name: "WHR 950"
   uart_id: uart_bus
   fan_supply_air_percentage:
-    name: "Fan supply (%)"
+    name: "Supply fan"
   fan_exhaust_air_percentage:
-    name: "Fan exhaust (%)"
+    name: "Exhaust fan"
   fan_speed_supply:
     name: "Supply fan speed"
   fan_speed_exhaust:
     name: "Exhaust fan speed"
   is_bypass_valve_open:
-    name: "Is bypas open?"
+    name: "Bypass"
   is_preheating:
-    name: "is preheating active?"
+    name: "Preheating"
   outside_air_temperature:
     name: "Outside temperature"
   supply_air_temperature:
@@ -41,37 +45,45 @@ comfoair:
     name: "Return temperature"
   exhaust_air_temperature:
     name: "Exhaust temperature"
-  enthalpy_temperature:
-    name: "Enthalpy temperature"
-  ewt_temperature:
-    name: "EWT temperature "
-  reheating_temperature:
-    name: "Reheating temperature"
-  kitchen_hood_temperature:
-    name: "Kitchen hood temperature"
-  return_air_level:
-    name: "Return level"
-  supply_air_level:
-    name: "Supply level"
   is_supply_fan_active:
-    name: "Is supply fan active?"
+    name: "Supply fan"
   is_filter_full:
-    name: "Is filter full?"
-  bypass_factor:
-    name: "Bypass factor"
+    name: "Filter status"
   bypass_step:
-    name: "Bypass step"
-  bypass_correction:
-    name: "Bypass correction"
+    name: "Bypass valve"
   is_summer_mode:
-    name: "Is summer mode?"
+    name: "Summer mode"
+
+button:
+  - platform: template
+    name: "Reset filter"
+    on_press:
+      then:
+        - lambda: |-
+                auto reset_filter = new esphome::comfoair::ComfoAirComponent();
+                reset_filter->reset_filter();
 ```
 
-The sensor defined here is a full list of sensor - if you remove sensor from yaml it will be not monitored.
+# Sensors
+The following sensors are created:
+
+![image](https://github.com/tieskuh/esphome-comfoair/assets/115901851/7d733ddb-2106-4b77-b6f5-8dccbe4459c1)
 
 
-For visualization: 
+# Hardware
+I used the following hardware:
+- M5Stack: https://nl.aliexpress.com/item/1005003299215808.html
+- M5Stack RS-232 add-on: https://nl.aliexpress.com/item/1005005933403536.html
 
-Have a look at simple_thermostat.yaml and https://github.com/nervetattoo/simple-thermostat
+![image](https://github.com/tieskuh/esphome-comfoair/assets/115901851/30fac702-c32d-469d-85dd-78bd432e304a)
 
-Or checkout https://github.com/wichers/lovelace-comfoair and follow the instructions.
+![image](https://github.com/tieskuh/esphome-comfoair/assets/115901851/fb6004f1-fa2d-49d7-8792-edb49e918043)
+
+![image](https://github.com/tieskuh/esphome-comfoair/assets/115901851/41531d2f-ca43-4b86-b24f-a7311b0b5898)
+
+Pin layout:
+- RX (receive) = pin 2
+- TX (transmit) = pin 3
+- GND (ground) = pin 5
+
+![image](https://github.com/tieskuh/esphome-comfoair/assets/115901851/6c8e96ea-fa3e-4b4c-8c62-9d6a73201175)
