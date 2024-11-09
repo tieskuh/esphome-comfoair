@@ -13,10 +13,10 @@ namespace comfoair {
 class ComfoAirComponent : public climate::Climate, public PollingComponent, public uart::UARTDevice {
 public:
 
-  // Poll every 10s
+  // Poll every 1s
   ComfoAirComponent() : 
   Climate(), 
-  PollingComponent(10000),
+  PollingComponent(1000),
   UARTDevice() { }
 
   /// Return the traits of this controller.
@@ -27,19 +27,12 @@ public:
       climate::CLIMATE_MODE_FAN_ONLY
     });
     traits.set_supports_two_point_target_temperature(false);
-    /// Presets remain unused
-    //traits.set_supported_presets({
-    //    climate::CLIMATE_PRESET_HOME,
-    //}); 
     traits.set_supports_action(false);
     traits.set_visual_min_temperature(12);
     traits.set_visual_max_temperature(29);
     /// Ensures valid target temperature steps
     traits.set_visual_target_temperature_step(0.5f);
     traits.set_supported_fan_modes({
-      /// Focus not present on my unit
-      //climate::CLIMATE_FAN_FOCUS,
-      climate::CLIMATE_FAN_AUTO,
       climate::CLIMATE_FAN_LOW,
       climate::CLIMATE_FAN_MEDIUM,
       climate::CLIMATE_FAN_HIGH,
@@ -55,28 +48,22 @@ public:
 
       this->fan_mode = *call.get_fan_mode();
       switch (this->fan_mode.value()) {
-        case climate::CLIMATE_FAN_HIGH:
-          level = 0x04;
-          break;
-        case climate::CLIMATE_FAN_MEDIUM:
-          level = 0x03;
-          break;
-        case climate::CLIMATE_FAN_LOW:
-          level = 0x02;
-          break;
-        case climate::CLIMATE_FAN_OFF:
-          level = 0x01;
-          break;
-        case climate::CLIMATE_FAN_AUTO:
-          level = 0x00;
-          break;
-        case climate::CLIMATE_FAN_ON:
-        case climate::CLIMATE_FAN_MIDDLE:
-        case climate::CLIMATE_FAN_DIFFUSE:
-	case climate::CLIMATE_FAN_FOCUS:
-        default:
-          level = -1;
-          break;
+	case climate::CLIMATE_FAN_HIGH:
+	  level = 0x04;
+	  break;
+	case climate::CLIMATE_FAN_MEDIUM:
+	  level = 0x03;
+	  break;
+	case climate::CLIMATE_FAN_LOW:
+	  level = 0x02;
+	  break;
+	case climate::CLIMATE_FAN_OFF:
+	  level = 0x01;
+	  break;
+	default:
+	  level = -1;
+	  break;
+
       }
 
       if (level >= 0) {
@@ -176,6 +163,7 @@ public:
   float get_setup_priority() const override { return setup_priority::DATA; }
 
   void reset_filter(void) {
+    ESP_LOGI(TAG, "Resetting filter");
     uint8_t reset_cmd[COMFOAIR_SET_RESET_LENGTH] = {0, 0, 0, 1};
     this->write_command_(COMFOAIR_SET_RESET_REQUEST, reset_cmd, sizeof(reset_cmd));
 	}
@@ -186,7 +174,7 @@ public:
 protected:
 
   void set_level_(int level) {
-    if (level < 0 || level > 5) {
+    if (level < 0 || level > 4) {
       ESP_LOGI(TAG, "Ignoring invalid level request: %i", level);
       return;
     }
@@ -378,31 +366,15 @@ protected:
         }
         break;
       }
-      case COMFOAIR_GET_SENSOR_DATA_RESPONSE: {
-
-        if (this->enthalpy_temperature != nullptr) {
-          this->enthalpy_temperature->publish_state((float) msg[0] / 2.0f - 20.0f);
-        }
-
-        break;
-      }
+      
       case COMFOAIR_GET_VENTILATION_LEVEL_RESPONSE: {
 
         ESP_LOGD(TAG, "Level %02x", msg[8]);
 
-        if (this->return_air_level != nullptr) {
-          this->return_air_level->publish_state(msg[6]);
-        }
-        if (this->supply_air_level != nullptr) {
-          this->supply_air_level->publish_state(msg[7]);
-        }
+        
 
         // Fan Speed
         switch(msg[8]) {
-          case 0x00:
-            this->fan_mode = climate::CLIMATE_FAN_AUTO;
-            this->mode = climate::CLIMATE_MODE_AUTO;
-            break;
           case 0x01:
             this->fan_mode = climate::CLIMATE_FAN_OFF;
             this->mode = climate::CLIMATE_MODE_OFF;
@@ -458,17 +430,10 @@ protected:
         if (this->exhaust_air_temperature != nullptr && msg[5] & 0x08) {
           this->exhaust_air_temperature->publish_state((float) msg[4] / 2.0f - 20.0f);
         }
-        // EWT
-        if (this->ewt_temperature != nullptr && msg[5] & 0x10) {
-          this->ewt_temperature->publish_state((float) msg[6] / 2.0f - 20.0f);
-        }
+
         // reheating
         if (this->reheating_temperature != nullptr && msg[5] & 0x20) {
           this->reheating_temperature->publish_state((float) msg[7] / 2.0f - 20.0f);
-        }
-        // kitchen hood
-        if (this->kitchen_hood_temperature != nullptr && msg[5] & 0x40) {
-          this->kitchen_hood_temperature->publish_state((float) msg[8] / 2.0f - 20.0f);
         }
 
         break;
@@ -565,9 +530,7 @@ public:
   sensor::Sensor *return_air_temperature{nullptr};
   sensor::Sensor *exhaust_air_temperature{nullptr};
   sensor::Sensor *enthalpy_temperature{nullptr};
-  sensor::Sensor *ewt_temperature{nullptr};
   sensor::Sensor *reheating_temperature{nullptr};
-  sensor::Sensor *kitchen_hood_temperature{nullptr};
   sensor::Sensor *return_air_level{nullptr};
   sensor::Sensor *supply_air_level{nullptr};
   sensor::Sensor *bypass_factor{nullptr};
@@ -590,9 +553,7 @@ public:
   void set_return_air_temperature(sensor::Sensor *return_air_temperature) {this->return_air_temperature =return_air_temperature; };
   void set_exhaust_air_temperature(sensor::Sensor *exhaust_air_temperature) {this->exhaust_air_temperature =exhaust_air_temperature; };
   void set_enthalpy_temperature(sensor::Sensor *enthalpy_temperature) {this->enthalpy_temperature =enthalpy_temperature; };
-  void set_ewt_temperature(sensor::Sensor *ewt_temperature) {this->ewt_temperature =ewt_temperature; };
   void set_reheating_temperature(sensor::Sensor *reheating_temperature) {this->reheating_temperature =reheating_temperature; };
-  void set_kitchen_hood_temperature(sensor::Sensor *kitchen_hood_temperature) {this->kitchen_hood_temperature =kitchen_hood_temperature; };
   void set_return_air_level(sensor::Sensor *return_air_level) {this->return_air_level =return_air_level; };
   void set_supply_air_level(sensor::Sensor *supply_air_level) {this->supply_air_level =supply_air_level; };
   void set_is_supply_fan_active(binary_sensor::BinarySensor *is_supply_fan_active) {this->is_supply_fan_active =is_supply_fan_active; };
