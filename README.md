@@ -92,6 +92,6 @@ Pin layout:
 ![image](https://github.com/tieskuh/esphome-comfoair/assets/115901851/6c8e96ea-fa3e-4b4c-8c62-9d6a73201175)
 
 To power the M5Stack, I used a 12v to 5v USB-C adapter and powered the M5Stack via USB-C. There are unused 12v connectors on the WHR's board.
-I assume you can also connect the 12v of the WHR diretly to the 12v of the M5Stack RS-232 addon. Or just use a normal 220v USB adapter.
+I assume you can also connect the 12v of the WHR directly to the 12v of the M5Stack RS-232 addon. Or just use a normal 220v USB adapter.
 
 ![image](https://github.com/user-attachments/assets/6a9b99cd-60ad-49be-b203-c1fd42381794)
