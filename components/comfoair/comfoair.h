@@ -222,7 +222,7 @@ protected:
 
         for (uint8_t i = 0; i < length; i++)
         {
-	  ESP_LOGW(TAG, "%02X; %02X : %02X",i,sum,command_data[i]);
+	  ESP_LOGW(TAG, "%02X; %04X : %02X",i,sum,command_data[i]);
           if (command_data[i] == 0x07)
           {
             if (skipByte)
