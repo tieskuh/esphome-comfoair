@@ -225,18 +225,16 @@ protected:
 	  ESP_LOGW(TAG, "%02X; %02X : %02X",i,sum,command_data[i]);
           if (command_data[i] == 0x07)
           {
-            if (skipByte)
-              continue;
+            if (skipByte) {
+                length++;
+		continue;
+	    }
             else
               skipByte = true;
           }
 
           sum += command_data[i];
         }
-	if (skipByte) {
-		i++;
-		sum += command_data[i];
-	}
         return sum % 256;
   }
 
