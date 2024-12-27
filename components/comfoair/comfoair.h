@@ -236,7 +236,7 @@ protected:
           sum += command_data[i];
 	  pointer=i;
         }
-	if skipByte = true {
+	if (skipByte) {
 		pointer++;
 		sum += command_data[pointer];
 	}
