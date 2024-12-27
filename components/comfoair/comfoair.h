@@ -229,6 +229,7 @@ protected:
               continue;
             else
               skipByte = true;
+	      length++;
           }
 
           sum += command_data[i];
