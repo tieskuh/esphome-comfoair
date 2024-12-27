@@ -229,7 +229,7 @@ protected:
             else
               skipByte = true;
           }
-	  ESP_LOGW(TAG, "%02X: %02X",i,command_data[i]);
+	  ESP_LOGW(TAG, "%02X; %02X : %02X",i,sum,command_data[i]);
           sum += command_data[i];
         }
         return sum % 256;
