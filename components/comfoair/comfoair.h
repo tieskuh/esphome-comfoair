@@ -227,7 +227,7 @@ protected:
           {
             if (skipByte) {
               continue;
-	      length++;
+	      length=length+2;
 	    }
             else
               skipByte = true;
