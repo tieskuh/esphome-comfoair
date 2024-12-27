@@ -227,9 +227,10 @@ protected:
           {
             if (skipByte)
               continue;
-            else
+            else {
               skipByte = true;
 	      length++;
+	    }
           }
 
           sum += command_data[i];
