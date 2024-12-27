@@ -222,7 +222,7 @@ protected:
 
         for (uint8_t i = 0; i < length; i++)
 
-	SP_LOGW(TAG, "CD: %02X",command_data[i]);
+	ESP_LOGW(TAG, "CD: %02X",command_data[i]);
         {
           if (command_data[i] == 0x07)
           {
