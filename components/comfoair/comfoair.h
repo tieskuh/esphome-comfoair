@@ -223,7 +223,7 @@ protected:
 	  
         for (uint8_t i = 0; i < length; i++)
         {
-	  ESP_LOGW(TAG, "%02X; %02X : %02X",i,sum,command_data[i]);
+	  
           if (command_data[i] == 0x07)
 		  
           {
@@ -235,12 +235,14 @@ protected:
           }
 
           sum += command_data[i];
+	  ESP_LOGW(TAG, "%02X; %02X : %02X",i,sum,command_data[i]);
 	  pointer=i;
         }
 	if (skipByte) {
 		pointer++;
 		sum += command_data[pointer];
 	}
+	ESP_LOGW(TAG, "%02X; %02X : %02X",i,sum,command_data[i]);
         return sum % 256;
   }
 
