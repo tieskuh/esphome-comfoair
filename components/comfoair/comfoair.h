@@ -284,7 +284,7 @@ protected:
     if (byte == 7) {
 	    if (this->data_[index-1] == 7) {
 		    ESP_LOGW(TAG, "Dubbel 7!");
-		    return byte = 0x07;
+		    return byte == 0x07;
 	    }
     }
 	  
