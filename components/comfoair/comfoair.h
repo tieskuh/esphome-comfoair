@@ -242,7 +242,7 @@ protected:
 		pointer++;
 		sum += command_data[pointer];
 	}
-	ESP_LOGW(TAG, "%02X; %02X : %02X",i,sum,command_data[i]);
+	ESP_LOGW(TAG, "CHKSUM: %02X",sum);
         return sum % 256;
   }
 
