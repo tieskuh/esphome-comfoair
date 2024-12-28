@@ -145,8 +145,9 @@ public:
       if (!check.has_value()) {
 
         // finished
+	ESP_LOGV(TAG, "Finished processing");
         if (this->data_[COMFOAIR_MSG_ACK_IDX] != COMFOAIR_MSG_ACK) {
-          	ESP_LOGV(TAG, "Start parsing");
+          	ESP_LOGV(TAG, "ACK Gevonden");
 		this->parse_data_();
         }
         this->data_index_ = 0;
