@@ -153,13 +153,13 @@ public:
         // wrong data
         ESP_LOGV(TAG, "Byte %i of received data frame is invalid.", this->data_index_);
         this->data_index_ = 0;
-      } else if ( *check == 0x07 ) {
-        // double 7
-        ESP_LOGV(TAG, "Dubbele zeven geconstateerd");
       } else {
         // next byte
-	ESP_LOGV(TAG, "Check: %i", check);
-        this->data_index_++;
+		if (this->data_index_ > COMFOAIR_MSG_HEAD_LENGTH && this->data_[this->data_index_] == 0x07 && this->data_[this->data_index_-1] == 0x07 {
+			continue }
+		else {
+        		this->data_index_++;
+		}
       }
     }
   }
