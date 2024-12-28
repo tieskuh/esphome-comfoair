@@ -280,7 +280,9 @@ protected:
     //check if previous byte is also 7
     if (byte == 7) {
 	    if (this->data_[index-1] == 7) {
-		    ESP_LOGW(TAG, "Dubbel 7!");
+		    ESP_LOGW(TAG, "Dubbel 7! index verlagen");
+		    this->data_index_--;
+		    return true;
 	    }
     }
 	  
@@ -288,18 +290,18 @@ protected:
       return true;
     }
 
-    // if (index == COMFOAIR_MSG_HEAD_LENGTH + data_length) {
-    //   // checksum is without checksum bytes
-    //   uint8_t checksum = comfoair_checksum_(this->data_ + 2, COMFOAIR_MSG_HEAD_LENGTH + data_length - 2);
-    //   if (checksum != byte) {
-    //     ESP_LOGW(TAG, "%02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X", this->data_[0], this->data_[1], this->data_[2], this->data_[3], this->data_[4], this->data_[5], this->data_[6], this->data_[7], this->data_[8], this->data_[9], this->data_[10],this->data_[11],this->data_[12],this->data_[13],this->data_[14]);
-    //     ESP_LOGW(TAG, "ComfoAir Checksum klopt niet: 0x%02X!=0x%02X", byte, checksum);
-    //     return false;
-    //   }
-    //   ESP_LOGW(TAG, "%02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X", this->data_[0], this->data_[1], this->data_[2], this->data_[3], this->data_[4], this->data_[5], this->data_[6], this->data_[7], this->data_[8], this->data_[9], this->data_[10],this->data_[11],this->data_[12],this->data_[13],this->data_[14]);
-    //   ESP_LOGW(TAG, "ComfoAir Checksum klopt: 0x%02X=0x%02X", byte, checksum);
-    //   return true;
-    // }
+    if (index == COMFOAIR_MSG_HEAD_LENGTH + data_length) {
+      // checksum is without checksum bytes
+      uint8_t checksum = comfoair_checksum_(this->data_ + 2, COMFOAIR_MSG_HEAD_LENGTH + data_length - 2);
+      if (checksum != byte) {
+        ESP_LOGW(TAG, "%02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X", this->data_[0], this->data_[1], this->data_[2], this->data_[3], this->data_[4], this->data_[5], this->data_[6], this->data_[7], this->data_[8], this->data_[9], this->data_[10],this->data_[11],this->data_[12],this->data_[13],this->data_[14]);
+        ESP_LOGW(TAG, "ComfoAir Checksum klopt niet: 0x%02X!=0x%02X", byte, checksum);
+        return false;
+      }
+      ESP_LOGW(TAG, "%02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X", this->data_[0], this->data_[1], this->data_[2], this->data_[3], this->data_[4], this->data_[5], this->data_[6], this->data_[7], this->data_[8], this->data_[9], this->data_[10],this->data_[11],this->data_[12],this->data_[13],this->data_[14]);
+      ESP_LOGW(TAG, "ComfoAir Checksum klopt: 0x%02X=0x%02X", byte, checksum);
+      return true;
+    }
 
     if (index == COMFOAIR_MSG_HEAD_LENGTH + data_length + 1) {
       return byte == COMFOAIR_MSG_PREFIX;
