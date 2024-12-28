@@ -296,17 +296,17 @@ protected:
       // ESP_LOGW(TAG, "ComfoAir Checksum klopt: 0x%02X=0x%02X", byte, checksum);
       return true;
     }
-
+    ESP_LOGW(TAG, "Hier komt de +1");
     if (index == COMFOAIR_MSG_HEAD_LENGTH + data_length + 1) {
       return byte == COMFOAIR_MSG_PREFIX;
     }
-
+    ESP_LOGW(TAG, "Hier komt de +2");
     if (index == COMFOAIR_MSG_HEAD_LENGTH + data_length + 2) {
       if (byte != COMFOAIR_MSG_TAIL) {
         return false;
       }
     }
-
+    ESP_LOGW(TAG, "Komen we hier?");
     return {};
   }
 
