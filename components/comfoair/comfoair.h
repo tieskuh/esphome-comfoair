@@ -156,7 +156,7 @@ public:
       } else {
         // next byte
 		if (this->data_index_ > COMFOAIR_MSG_HEAD_LENGTH && this->data_[this->data_index_] == 0x07 && this->data_[this->data_index_-1] == 0x07) {
-			continue }
+			continue; }
 		else {
         		this->data_index_++;
 		}
