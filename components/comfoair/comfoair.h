@@ -301,9 +301,9 @@ protected:
       return byte == COMFOAIR_MSG_PREFIX;
     }
     ESP_LOGW(TAG, "Hier komt de +2");
-    if (index == COMFOAIR_MSG_HEAD_LENGTH + data_length + 2) {
-      if (byte != COMFOAIR_MSG_TAIL) {
-        return false;
+    if (index >= COMFOAIR_MSG_HEAD_LENGTH + data_length + 2) {
+      if (byte == COMFOAIR_MSG_TAIL && this->data_[index-1] == COMFOAIR_MSG_PREFIX) {
+        return {};
       }
     }
     ESP_LOGW(TAG, "Komen we hier?");
