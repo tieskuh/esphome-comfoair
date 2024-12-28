@@ -277,6 +277,13 @@ protected:
       return false;
     }
 
+    //check if previous byte is also 7
+    if (byte == 7) {
+	    if (this->data_[index-1] == 7) {
+		    ESP_LOGW(TAG, "Dubbel 7!");
+	    }
+    }
+	  
     if (index < COMFOAIR_MSG_HEAD_LENGTH + data_length) {
       return true;
     }
