@@ -155,9 +155,10 @@ public:
         this->data_index_ = 0;
       } else if ( *check == 0x07 ) {
         // double 7
-        ESP_LOGV(TAG, "Dubbele zeven geconstateerd", this->data_index_);
+        ESP_LOGV(TAG, "Dubbele zeven geconstateerd");
       } else {
         // next byte
+	ESP_LOGV(TAG, "Check: %i", check);
         this->data_index_++;
       }
     }
