@@ -141,6 +141,7 @@ public:
   void loop() override {
     while (this->available() != 0) {
       this->read_byte(&this->data_[this->data_index_]);
+      ESP_LOGW(TAG, "Byte: %02X",this->data_[this->data_index_]);
       auto check = this->check_byte_();
       if (!check.has_value()) {
 
