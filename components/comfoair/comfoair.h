@@ -141,14 +141,14 @@ public:
   void loop() override {
     while (this->available() != 0) {
       this->read_byte(&this->data_[this->data_index_]);
-      ESP_LOGW(TAG, "Byte: %02X",this->data_[this->data_index_]);
+      // ESP_LOGW(TAG, "Byte: %02X",this->data_[this->data_index_]);
       auto check = this->check_byte_();
       if (!check.has_value()) {
 
         // finished
-	ESP_LOGW(TAG, "Finished processing");
+	// ESP_LOGW(TAG, "Finished processing");
         if (this->data_[COMFOAIR_MSG_ACK_IDX] != COMFOAIR_MSG_ACK) {
-          	ESP_LOGW(TAG, "ACK Gevonden");
+          	// ESP_LOGW(TAG, "ACK Gevonden");
 		this->parse_data_();
         }
         this->data_index_ = 0;
@@ -159,7 +159,7 @@ public:
       } else {
         // check on double 7 or next byte
 		if (this->data_index_ > COMFOAIR_MSG_HEAD_LENGTH &&  this->data_[this->data_index_] == 0x07 && this->data_[this->data_index_-1] == 0x07 && this->data_index_ < (COMFOAIR_MSG_HEAD_LENGTH + this->data_[COMFOAIR_MSG_DATA_LENGTH_IDX]) ) {
-			ESP_LOGW(TAG, "Dubbel 7 gevonden");
+			// ESP_LOGW(TAG, "Dubbel 7 gevonden");
 			continue; }
 		else {
         		this->data_index_++;
@@ -229,10 +229,8 @@ protected:
     bool skipByte = false;
 	  
         for (uint8_t i = 0; i < length; i++)
-        {
-	  
-          if (command_data[i] == 0x07)
-		  
+        {	  
+          if (command_data[i] == 0x07)		  
           {
 	    if (skipByte) {
 		continue;
@@ -240,10 +238,8 @@ protected:
             else
               skipByte = true;
           }
-
           sum += command_data[i];
 	  // ESP_LOGW(TAG, "%02X; %02X : %02X",i,sum,command_data[i]);
-
         }
 	// ESP_LOGW(TAG, "CHKSUM: %02X",sum);
         return sum % 256;
@@ -288,25 +284,25 @@ protected:
       // checksum is without checksum bytes
       uint8_t checksum = comfoair_checksum_(this->data_ + 2, COMFOAIR_MSG_HEAD_LENGTH + data_length - 2);
       if (checksum != byte) {
-        ESP_LOGW(TAG, "%02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X", this->data_[0], this->data_[1], this->data_[2], this->data_[3], this->data_[4], this->data_[5], this->data_[6], this->data_[7], this->data_[8], this->data_[9], this->data_[10],this->data_[11],this->data_[12],this->data_[13],this->data_[14],this->data_[15],this->data_[16],this->data_[17],this->data_[18],this->data_[19],this->data_[20]);
+        // ESP_LOGW(TAG, "%02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X", this->data_[0], this->data_[1], this->data_[2], this->data_[3], this->data_[4], this->data_[5], this->data_[6], this->data_[7], this->data_[8], this->data_[9], this->data_[10],this->data_[11],this->data_[12],this->data_[13],this->data_[14],this->data_[15],this->data_[16],this->data_[17],this->data_[18],this->data_[19],this->data_[20]);
         ESP_LOGW(TAG, "ComfoAir Checksum klopt niet: 0x%02X!=0x%02X", byte, checksum);
         return false;
       }
-      ESP_LOGW(TAG, "%02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X", this->data_[0], this->data_[1], this->data_[2], this->data_[3], this->data_[4], this->data_[5], this->data_[6], this->data_[7], this->data_[8], this->data_[9], this->data_[10],this->data_[11],this->data_[12],this->data_[13],this->data_[14],this->data_[15],this->data_[16],this->data_[17],this->data_[18],this->data_[19],this->data_[20]);
+      // ESP_LOGW(TAG, "%02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X", this->data_[0], this->data_[1], this->data_[2], this->data_[3], this->data_[4], this->data_[5], this->data_[6], this->data_[7], this->data_[8], this->data_[9], this->data_[10],this->data_[11],this->data_[12],this->data_[13],this->data_[14],this->data_[15],this->data_[16],this->data_[17],this->data_[18],this->data_[19],this->data_[20]);
       // ESP_LOGW(TAG, "ComfoAir Checksum klopt: 0x%02X=0x%02X", byte, checksum);
       return true;
     }
-    ESP_LOGW(TAG, "Hier komt de +1");
+    
     if (index == COMFOAIR_MSG_HEAD_LENGTH + data_length + 1) {
       return byte == COMFOAIR_MSG_PREFIX;
     }
-    ESP_LOGW(TAG, "Hier komt de +2");
+    
     if (index >= COMFOAIR_MSG_HEAD_LENGTH + data_length + 2) {
       if (byte == COMFOAIR_MSG_TAIL && this->data_[index-1] == COMFOAIR_MSG_PREFIX) {
         return {};
       }
     }
-    ESP_LOGW(TAG, "Komen we hier?");
+    
     return {};
   }
 
