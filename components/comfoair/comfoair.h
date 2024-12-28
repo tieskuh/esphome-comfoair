@@ -145,15 +145,15 @@ public:
       if (!check.has_value()) {
 
         // finished
-	ESP_LOGV(TAG, "Finished processing");
+	ESP_LOGW(TAG, "Finished processing");
         if (this->data_[COMFOAIR_MSG_ACK_IDX] != COMFOAIR_MSG_ACK) {
-          	ESP_LOGV(TAG, "ACK Gevonden");
+          	ESP_LOGW(TAG, "ACK Gevonden");
 		this->parse_data_();
         }
         this->data_index_ = 0;
       } else if (!*check) {
         // wrong data
-        ESP_LOGV(TAG, "Byte %i of received data frame is invalid.", this->data_index_);
+        ESP_LOGW(TAG, "Byte %i of received data frame is invalid.", this->data_index_);
         this->data_index_ = 0;
       } else {
         // check on double 7 or next byte
