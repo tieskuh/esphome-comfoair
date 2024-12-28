@@ -153,6 +153,9 @@ public:
         // wrong data
         ESP_LOGV(TAG, "Byte %i of received data frame is invalid.", this->data_index_);
         this->data_index_ = 0;
+      } else if ( check == 0x07 ) {
+        // double 7
+        ESP_LOGV(TAG, "Dubbele zeven geconstateerd", this->data_index_);
       } else {
         // next byte
         this->data_index_++;
@@ -280,9 +283,8 @@ protected:
     //check if previous byte is also 7
     if (byte == 7) {
 	    if (this->data_[index-1] == 7) {
-		    ESP_LOGW(TAG, "Dubbel 7! index verlagen");
-		    this->data_index_--;
-		    return true;
+		    ESP_LOGW(TAG, "Dubbel 7!");
+		    return byte = 0x07;
 	    }
     }
 	  
