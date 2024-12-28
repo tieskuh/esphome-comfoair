@@ -158,6 +158,7 @@ public:
       } else {
         // check on double 7 or next byte
 		if (this->data_index_ > COMFOAIR_MSG_HEAD_LENGTH && this->data_[this->data_index_] == 0x07 && this->data_[this->data_index_-1] == 0x07) {
+			ESP_LOGW(TAG, "Dubbel 7 gevonden");
 			continue; }
 		else {
         		this->data_index_++;
