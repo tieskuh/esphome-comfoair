@@ -310,6 +310,8 @@ protected:
     this->status_clear_warning();
     uint8_t *msg = &this->data_[COMFOAIR_MSG_HEAD_LENGTH];
 
+    ESP_LOGD(TAG, "Level %02x", this->data_[COMFOAIR_MSG_IDENTIFIER_IDX]);
+	  
     switch (this->data_[COMFOAIR_MSG_IDENTIFIER_IDX]) {
       case COMFOAIR_GET_BOOTLOADER_VERSION_RESPONSE:
         memcpy(bootloader_version_, msg, this->data_[COMFOAIR_MSG_DATA_LENGTH_IDX]);
