@@ -223,7 +223,6 @@ protected:
   uint8_t comfoair_checksum_(const uint8_t *command_data, uint8_t length) const {
     uint8_t sum = 173;
     bool skipByte = false;
-    uint8_t pointer = 0;
 	  
         for (uint8_t i = 0; i < length; i++)
         {
@@ -240,7 +239,7 @@ protected:
 
           sum += command_data[i];
 	  ESP_LOGW(TAG, "%02X; %02X : %02X",i,sum,command_data[i]);
-	  pointer=i;
+
         }
 	ESP_LOGW(TAG, "CHKSUM: %02X",sum);
         return sum % 256;
