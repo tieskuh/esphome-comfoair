@@ -157,7 +157,7 @@ public:
       } else {
         // check on double 7 or next byte
 		if (this->data_index_ > COMFOAIR_MSG_HEAD_LENGTH &&  this->data_[this->data_index_] == 0x07 && this->data_[this->data_index_-1] == 0x07 && this->data_index_ < (COMFOAIR_MSG_HEAD_LENGTH + this->data_[COMFOAIR_MSG_DATA_LENGTH_IDX]) ) {
-			ESP_LOGW(TAG, "Dubbel 7 gevonden");
+			// ESP_LOGW(TAG, "Dubbel 7 gevonden");
 			continue; }
 		else {
         		this->data_index_++;
@@ -286,7 +286,7 @@ protected:
         ESP_LOGW(TAG, "ComfoAir Checksum klopt niet: 0x%02X!=0x%02X", byte, checksum);
         return false;
       }
-      ESP_LOGW(TAG, "%02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X", this->data_[0], this->data_[1], this->data_[2], this->data_[3], this->data_[4], this->data_[5], this->data_[6], this->data_[7], this->data_[8], this->data_[9], this->data_[10],this->data_[11],this->data_[12],this->data_[13],this->data_[14],this->data_[15],this->data_[16],this->data_[17],this->data_[18],this->data_[19],this->data_[20],this->data_[21],this->data_[22],this->data_[23],this->data_[24],this->data_[25]);
+      // ESP_LOGW(TAG, "%02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X", this->data_[0], this->data_[1], this->data_[2], this->data_[3], this->data_[4], this->data_[5], this->data_[6], this->data_[7], this->data_[8], this->data_[9], this->data_[10],this->data_[11],this->data_[12],this->data_[13],this->data_[14],this->data_[15],this->data_[16],this->data_[17],this->data_[18],this->data_[19],this->data_[20],this->data_[21],this->data_[22],this->data_[23],this->data_[24],this->data_[25]);
       // ESP_LOGW(TAG, "ComfoAir Checksum klopt: 0x%02X=0x%02X", byte, checksum);
       return true;
     }
@@ -296,7 +296,7 @@ protected:
     }
     
     if (index >= COMFOAIR_MSG_HEAD_LENGTH + data_length + 2) {
-	ESP_LOGW(TAG, "Data length: 0x%02X", sizeof(this->data_));
+	// ESP_LOGW(TAG, "Data length: 0x%02X", sizeof(this->data_));
       // if (byte == COMFOAIR_MSG_TAIL && this->data_[index-1] == COMFOAIR_MSG_PREFIX) {
         return {};
       // }
