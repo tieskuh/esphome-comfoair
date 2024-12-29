@@ -300,9 +300,9 @@ protected:
     
     if (index >= COMFOAIR_MSG_HEAD_LENGTH + data_length + 2) {
 	ESP_LOGW(TAG, "Data length: 0x%02X", sizeof(this->data_));
-      if (byte == COMFOAIR_MSG_TAIL && this->data_[index-1] == COMFOAIR_MSG_PREFIX) {
+      // if (byte == COMFOAIR_MSG_TAIL && this->data_[index-1] == COMFOAIR_MSG_PREFIX) {
         return {};
-      }
+      // }
     }
     
     return {};
