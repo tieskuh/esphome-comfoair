@@ -3,13 +3,16 @@ Port of ComfoAir protocol to ESPHome.io firmware originally by @wichers modified
 to be installed as external_components. Modified for the Zehnder WHR 950 by @tieskuh.
 Also confirmed working for the Zehnder WHR 930.
 
+The version of @wichers (and other forks) contained an omission in the processing of the data. Double occurances of 0x07 in the data should be converted to single occurances. This also fixes the broken crc check and incorrect processing of fan values < 1000 rpm.
+The coding is not as beautiful as the original code but is is now working according to the standard described in: http://www.see-solutions.de/sonstiges/Protokollbeschreibung_ComfoAir.pdf
+
 # Configuration
 Add to your yaml configuration the definition of `external_components`:
 ```
 external_components:
   - source:
       type: git
-      url: https://github.com/tieskuh/esphome-comfoair
+      url: https://github.com/bammetje/esphome-comfoair
     components: [comfoair]
     refresh: 0s
 ```
@@ -63,35 +66,5 @@ button:
               id(comfoair_climate)->reset_filter();
 ```
 
-# Sensors
-The following sensors are created:
-
-![image](https://github.com/tieskuh/esphome-comfoair/assets/115901851/7d733ddb-2106-4b77-b6f5-8dccbe4459c1)
-
-
-# Hardware
-I used the following hardware:
-- RS-232 cable with DB9 D-SUB male connector
-- M5Stack: https://nl.aliexpress.com/item/1005003299215808.html
-- M5Stack RS-232 add-on: https://nl.aliexpress.com/item/1005005933403536.html
-- 12v to 5v USB-C adapter: https://nl.aliexpress.com/item/1005004984244010.html
-
-![image](https://github.com/tieskuh/esphome-comfoair/assets/115901851/30fac702-c32d-469d-85dd-78bd432e304a)
-
-![image](https://github.com/tieskuh/esphome-comfoair/assets/115901851/fb6004f1-fa2d-49d7-8792-edb49e918043)
-
-![image](https://github.com/tieskuh/esphome-comfoair/assets/115901851/41531d2f-ca43-4b86-b24f-a7311b0b5898)
-
-Pin layout:
-- RX (receive) = pin 2
-- TX (transmit) = pin 3
-- GND (ground) = pin 5
-
-(If it doesn't work, try to switch RX and TX. The RX on one end should be the TX on the other end.)
-
-![image](https://github.com/tieskuh/esphome-comfoair/assets/115901851/6c8e96ea-fa3e-4b4c-8c62-9d6a73201175)
-
-To power the M5Stack, I used a 12v to 5v USB-C adapter and powered the M5Stack via USB-C. There are unused 12v connectors on the WHR's board.
-I assume you can also connect the 12v of the WHR directly to the 12v of the M5Stack RS-232 addon. Or just use a normal 220v USB adapter.
 
 ![image](https://github.com/user-attachments/assets/6a9b99cd-60ad-49be-b203-c1fd42381794)
