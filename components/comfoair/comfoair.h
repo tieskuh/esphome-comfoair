@@ -154,7 +154,7 @@ public:
         // wrong data
         ESP_LOGW(TAG, "Byte %i of received data frame is invalid.", this->data_index_);
 	for (uint8_t i = 0; i < 40; i++) {
-		this->data_(i)=0x00;
+		this->data_[i]=0x00;
 	}
         this->data_index_ = 0;
       } else {
