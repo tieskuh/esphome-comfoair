@@ -146,9 +146,7 @@ public:
       if (!check.has_value()) {
 
         // finished
-	// ESP_LOGW(TAG, "Finished processing");
         if (this->data_[COMFOAIR_MSG_ACK_IDX] != COMFOAIR_MSG_ACK) {
-          	// ESP_LOGW(TAG, "ACK Gevonden");
 		this->parse_data_();
         }
         this->data_index_ = 0;
@@ -159,7 +157,8 @@ public:
       } else {
         // check on double 7 or next byte
 		if (this->data_index_ > COMFOAIR_MSG_HEAD_LENGTH &&  this->data_[this->data_index_] == 0x07 && this->data_[this->data_index_-1] == 0x07 && this->data_index_ < (COMFOAIR_MSG_HEAD_LENGTH + this->data_[COMFOAIR_MSG_DATA_LENGTH_IDX]) ) {
-			// ESP_LOGW(TAG, "Dubbel 7 gevonden");
+			ESP_LOGW(TAG, "Dubbel 7 gevonden");
+			this->double_seven_++;
 			continue; }
 		else {
         		this->data_index_++;
