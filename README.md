@@ -76,6 +76,7 @@ The following sensors are created:
 I used the following hardware:
 - RS-232 cable with DB9 D-SUB male connector
 - M5Stack Atom Lite: https://nl.aliexpress.com/item/1005003299215808.html
+  (Atom S3 Lite also confirmed to be working)
 - M5Stack RS-232 add-on: https://nl.aliexpress.com/item/1005005933403536.html
 - 12v to 5v USB-C adapter: https://nl.aliexpress.com/item/1005004984244010.html
 
@@ -94,7 +95,6 @@ Pin layout:
 
 ![image](https://github.com/tieskuh/esphome-comfoair/assets/115901851/6c8e96ea-fa3e-4b4c-8c62-9d6a73201175)
 
-To power the M5Stack, I used a 12v to 5v USB-C adapter and powered the M5Stack via USB-C. There are unused 12v connectors on the WHR's board.
-I assume you can also connect the 12v of the WHR directly to the 12v of the M5Stack RS-232 addon. Or just use a normal 220v USB adapter.
+To power the M5Stack, I used a 12v to 5v USB-C adapter and powered the M5Stack via USB-C. There are unused 12v connectors on the WHR's board. Or just use a normal 220v USB adapter.
 
 ![image](https://github.com/user-attachments/assets/6a9b99cd-60ad-49be-b203-c1fd42381794)
