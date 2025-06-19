@@ -14,8 +14,8 @@ external_components:
     refresh: 0s
 ```
 
-And than add the uart configuration and component. Pin 22 and 19 is used for the M5Stack Atom Lite. 
-For the Atom S3 Lite use rx_pin 5 and tx_pin 6.
+And than add the uart configuration and component. Pin 22 and 19 are used for the M5Stack Atom Lite with the RS-232 addon. 
+For the Atom S3 Lite with the RS-232 addon use rx_pin 5 and tx_pin 6.
 
 ```
 uart:
