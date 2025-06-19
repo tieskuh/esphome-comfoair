@@ -14,7 +14,9 @@ external_components:
     refresh: 0s
 ```
 
-and than use it:
+And than add the uart configuration and component. Pin 22 and 19 is used for the M5Stack Atom Lite. 
+For the Atom S3 Lite use rx_pin 5 and tx_pin 6.
+
 ```
 uart:
   id: uart_bus
@@ -63,6 +65,7 @@ button:
               id(comfoair_climate)->reset_filter();
 ```
 
+
 # Sensors
 The following sensors are created:
 
@@ -72,7 +75,7 @@ The following sensors are created:
 # Hardware
 I used the following hardware:
 - RS-232 cable with DB9 D-SUB male connector
-- M5Stack: https://nl.aliexpress.com/item/1005003299215808.html
+- M5Stack Atom Lite: https://nl.aliexpress.com/item/1005003299215808.html
 - M5Stack RS-232 add-on: https://nl.aliexpress.com/item/1005005933403536.html
 - 12v to 5v USB-C adapter: https://nl.aliexpress.com/item/1005004984244010.html
 
