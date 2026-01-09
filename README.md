@@ -26,6 +26,7 @@ uart:
 
 comfoair:
   name: "WHR 950"
+  id: comfoair_climate
   uart_id: uart_bus
   fan_supply_air_percentage:
     name: "Supply fan"
