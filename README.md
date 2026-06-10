@@ -3,6 +3,8 @@ Port of ComfoAir protocol to ESPHome.io firmware originally by @wichers modified
 to be installed as external_components. Modified for the Zehnder WHR 950 by @tieskuh.
 Also confirmed working for the Zehnder WHR 930.
 
+> **Note:** Updated for the latest ESPHome (verified to compile on 2026.5). Earlier versions no longer built due to changes in the ESPHome `ClimateTraits` API and component includes.
+
 # Configuration
 Add to your yaml configuration the definition of `external_components`:
 ```
