@@ -140,7 +140,21 @@ public:
 
   void loop() override {
     while (this->available() != 0) {
-      this->read_byte(&this->data_[this->data_index_]);
+      uint8_t byte;
+      this->read_byte(&byte);
+
+      // Byte stuffing: a 0x07 data byte is transmitted doubled. After storing
+      // a real 0x07 from the data region, consume its double here before any
+      // other processing, so adjacent 0x07 data bytes (e.g. a fan period of
+      // 0x0707) and a stuffed final data byte decode correctly.
+      if (this->awaiting_stuffed_07_) {
+        this->awaiting_stuffed_07_ = false;
+        if (byte == 0x07) {
+          continue;
+        }
+      }
+
+      this->data_[this->data_index_] = byte;
       auto check = this->check_byte_();
       if (!check.has_value()) {
 
@@ -154,11 +168,11 @@ public:
         ESP_LOGV(TAG, "Byte %i of received data frame is invalid.", this->data_index_);
         this->data_index_ = 0;
       } else {
-	// check on double 7 or next byte
-	if (this->data_index_ > COMFOAIR_MSG_HEAD_LENGTH &&  this->data_[this->data_index_] == 0x07 && this->data_[this->data_index_-1] == 0x07 && this->data_index_ < (COMFOAIR_MSG_HEAD_LENGTH + this->data_[COMFOAIR_MSG_DATA_LENGTH_IDX]) )
-	  continue;
-	else
-	  this->data_index_++;	
+        if (byte == 0x07 && this->data_index_ >= COMFOAIR_MSG_HEAD_LENGTH &&
+            this->data_index_ < (COMFOAIR_MSG_HEAD_LENGTH + this->data_[COMFOAIR_MSG_DATA_LENGTH_IDX])) {
+          this->awaiting_stuffed_07_ = true;
+        }
+        this->data_index_++;
       }
     }
   }
@@ -209,7 +223,14 @@ protected:
     this->write_byte(command);
     this->write_byte(command_data_length);
     if (command_data_length > 0) {
-      this->write_array(command_data, command_data_length);
+      for (uint8_t i = 0; i < command_data_length; i++) {
+        this->write_byte(command_data[i]);
+        if (command_data[i] == 0x07) {
+          // byte stuffing: 0x07 in the data region is sent doubled and the
+          // double is not counted in the length field or the checksum
+          this->write_byte(0x07);
+        }
+      }
       this->write_byte((command + command_data_length + comfoair_checksum_(command_data, command_data_length)) & 0xff);
     } else {
       this->write_byte(comfoair_checksum_(&command, 1));
@@ -220,21 +241,17 @@ protected:
 }
 
   uint8_t comfoair_checksum_(const uint8_t *command_data, uint8_t length) const {
+    // Per the protocol description the checksum is the plain sum of all bytes
+    // (command, length, data) plus 173; stuffed doubles of 0x07 count once.
+    // The receive buffer is already de-stuffed and outgoing data is stuffed
+    // only on the wire, so every byte here counts exactly once. The old
+    // skip-repeated-0x07 logic wrongly dropped the second of two distinct
+    // 0x07 data bytes (e.g. both fan periods in the 0x07xx range).
     uint8_t sum = 173;
-        bool skipByte = false;
-
-        for (uint8_t i = 0; i < length; i++)
-        {
-          if (command_data[i] == 0x07)
-          {
-            if (skipByte)
-              continue;
-            else
-              skipByte = true;
-          }
-          sum += command_data[i];
-        }
-        return sum % 256;
+    for (uint8_t i = 0; i < length; i++) {
+      sum += command_data[i];
+    }
+    return sum;
   }
 
   optional<bool> check_byte_() const {
@@ -515,6 +532,7 @@ protected:
 
   uint8_t data_[30];
   uint8_t data_index_{0};
+  bool awaiting_stuffed_07_{false};
   int8_t update_counter_{-3};
 
   uint8_t bootloader_version_[13]{0};
