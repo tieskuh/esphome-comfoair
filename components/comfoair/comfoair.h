@@ -287,12 +287,11 @@ protected:
       return byte == COMFOAIR_MSG_PREFIX;
     }
 
-    if (index == COMFOAIR_MSG_HEAD_LENGTH + data_length + 2) {
-      if (byte != COMFOAIR_MSG_TAIL) {
-        return false;
-      }
-    }
-
+    // Frame complete. When the checksum byte equals 0x07 it gets byte-stuffed
+    // (doubled), shifting the trailing prefix/tail one position. The checksum
+    // has already been validated above, so accept the frame here instead of
+    // rejecting it on a strict tail-byte (0x0F) match, which would drop every
+    // frame whose checksum happens to be 0x07.
     return {};
   }
 
